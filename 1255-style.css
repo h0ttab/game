@@ -1,6 +1,8 @@
 @media (max-width: 1255px) {
     .wrapper {
         flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
 
     .player {
@@ -34,5 +36,32 @@
         width: 65px;
         height: 40px;
         margin: 0;
+    }
+
+    .settings {
+        padding-top: 20px;
+        flex-direction: row;
+    }
+
+    .settings_buttons {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .settings_buttons button {
+        height: 50px;
+        width: 120px;
+        margin-bottom: 5px;
+    }
+    
+    .settings input {
+        width: 70px;
+        margin-bottom: 5px;
+    }
+
+    .player1_settings {
+        margin-right: 20px;
     }
 }
