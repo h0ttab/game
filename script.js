@@ -1,38 +1,40 @@
-// Initital settings
+// Начальные настройки
 const log = document.getElementById('combatLog');
 let p1_name = 'Ричард Львиное Сердце';
 let p2_name = 'Король Артур';
+const p1_hp_bar = document.getElementById('player_1_hp');
+const p2_hp_bar = document.getElementById('player_2_hp');
 document.getElementById('player1__name').textContent = p1_name;
 document.getElementById('player2__name').textContent = p2_name;
 let p1_hp = document.getElementById('player_1_hp').value;
 let p2_hp = document.getElementById('player_2_hp').value;
+p1_hp_bar.setAttribute('low', p1_hp * 0.3)
+p2_hp_bar.setAttribute('low', p2_hp * 0.3)
+p1_hp_bar.setAttribute('high', p1_hp * 0.75)
+p2_hp_bar.setAttribute('high', p2_hp * 0.75)
+p1_hp_bar.setAttribute('optimum', p1_hp * 0.9)
+p2_hp_bar.setAttribute('optimum', p2_hp * 0.9)
 let turn = 'Ход игрока 1';
 
-// Player 1 stats
+// Характеристики игрока 1
 let p1_max_hp = 100;
 let player1_damage = 15;
 let player1_block = 0;
 let player1_crit = 10;
 let player1_dodge = 10;
 
-// Player 2 stats
+// Характеристики игрока 2
 let p2_max_hp = 100;
 let player2_damage = 15;
 let player2_block = 0;
 let player2_crit = 10;
 let player2_dodge = 10;
 
-// Initial functions call
+// Вызов начальных функций
 p1_hp = p1_max_hp;
 p2_hp = p2_max_hp;
 turns();
 update();
-
-function update() { // Функция обновляет отображение полоски HP в соотв. с переменными, проверяет не победил ли кто-то из игроков, и выводит числовое значение HP рядом с полоской.
-    updateHP();
-    hpCheck();
-    displayHP();
-}
 
 function attack(player) { // Функция атаки. Принимает в виде агрумента имя атакующего игрока - player1 или player2.
     turns();
@@ -92,21 +94,6 @@ function block(player) { // Функция блока. Персонаж може
     }
 }
 
-function resetGame() { // Сброс всех параметров на параметры по умолчанию
-    p1_hp = p1_max_hp;
-    p2_hp = p2_max_hp;
-    player1_crit = player1_crit;
-    player1_dodge = player1_dodge;
-    player1_block = 0;
-    player2_crit = player2_crit;
-    player2_dodge = player2_dodge;
-    player2_block = 0;
-    turn = 'Ход игрока 1';
-    turns();
-    update();
-    log.innerHTML = '';
-}
-
 function randomChance(percent) { // This function takes an integer argument (percent) and returns true with a (percent)% chance. 
     let chance = Math.floor(Math.random() * 99 + 1);
     if (chance <= percent) {
@@ -127,7 +114,7 @@ function dodge(player) { /* Функция расчёта вероятности
     } else {
         return false;
     }
-}
+};
 
 function crit(player) { /* Функция принимает имя игрока в виде аргумента и наносит другому игроку урон * множ. крита, если случайное число от 1 до 100 попадает в диапазон крит шанса игрока.
                         Например, player1_crit = 10, означает, что игрок 1 наносит критический удар, если случайное число от 1 до 100 будет меньше или равно 10 (т.е. вероятность 10%). */
@@ -150,28 +137,58 @@ function crit(player) { /* Функция принимает имя игрока
     }
 };
 
+function update() { // Функция обновляет отображение полоски HP в соотв. с переменными, проверяет не победил ли кто-то из игроков, и выводит числовое значение HP рядом с полоской.
+    updateHP();
+    hpCheck();
+    displayHP();
+}
+
+function resetGame() { // Сброс всех параметров на параметры по умолчанию
+    p1_hp = p1_max_hp;
+    p2_hp = p2_max_hp;
+    player1_crit = player1_crit;
+    player1_dodge = player1_dodge;
+    player1_block = 0;
+    player2_crit = player2_crit;
+    player2_dodge = player2_dodge;
+    player2_block = 0;
+    turn = 'Ход игрока 1';
+    turns();
+    update();
+    log.innerHTML = '';
+}
+
+function stopGame() { // Остановка игры и отключение кнопок действий. Вызывается в случае победы одного из игроков.
+    document.getElementById('player_2_attack').disabled = true;
+    document.getElementById('player_2_block').disabled = true;
+    document.getElementById('player_1_attack').disabled = true;
+    document.getElementById('player_1_block').disabled = true;
+};
+
+
 function hpCheck() { // Функция проверки текущего HP игроков. Если у одного из игроков HP меньше или равно 0 - игра заканчивается.
     if (p1_hp <= 0) {
         p1_hp = 0;
         updateHP();
         stopGame();
-        combatLog(p1_name + ' погиб!');
+        combatLog(p1_name + ' погибает!');
     } else if (p2_hp <= 0 ) {
         p2_hp = 0;
         updateHP();
         stopGame();
-        combatLog(p2_name + ' погиб!');
+        combatLog(p2_name + ' погибает!');
     } else {
         return;
     }
-}
+};
 
 function updateHP() { // Обновляет значения хп на актуальные 
     document.getElementById('player_1_hp').setAttribute('value', p1_hp);
     document.getElementById('player_1_hp').setAttribute('max', p1_max_hp);
     document.getElementById('player_2_hp').setAttribute('value', p2_hp);
     document.getElementById('player_2_hp').setAttribute('max', p2_max_hp);
-}
+};
+
 function displayHP() { // Отрисовывает текущее хп игроков
     document.getElementById('p1_hp_display').innerText = p1_hp + ' HP';
     document.getElementById('p2_hp_display').innerText = p2_hp + ' HP';
@@ -191,16 +208,9 @@ function turns() { // Реализует механизм ходов по оче
         document.getElementById('player_1_block').disabled = true;
         turn = 'Ход игрока 1'
     }
-}
+};
 
-function stopGame() { // Остановка игры и отключение кнопок действий. Вызывается в случае победы одного из игроков.
-    document.getElementById('player_2_attack').disabled = true;
-    document.getElementById('player_2_block').disabled = true;
-    document.getElementById('player_1_attack').disabled = true;
-    document.getElementById('player_1_block').disabled = true;
-}
-
-function timeStamp() {
+function timeStamp() { // Функция, которая возвращает время на момент её вызова (формат чч:мм:сс)
    let hours = new Date().getHours();
    let minutes = new Date().getMinutes();
    let seconds = new Date().getSeconds();
@@ -209,16 +219,9 @@ function timeStamp() {
    if (seconds < 10) {seconds = '0' + seconds};
    let time = hours + ':' + minutes + ':' + seconds + ' : ' ;
    return time;
-}
+};
 
-function importantText(text) {
-    let redText = document.createElement('span');
-    redText.className = importantText;
-    redText.innerText = text;
-    return redText;
-}
-
-function combatLog(message) {
+function combatLog(message) { // Получает аргумент "message" и выводит его в журнал боя.
     const time = document.createElement('span');
     const logText = document.createElement('div');
     time.textContent = timeStamp();
@@ -228,10 +231,17 @@ function combatLog(message) {
     logText.prepend(time);
     log.appendChild(logText);
     ScrollToBottom();
-}
+};
 
 
 function ScrollToBottom() { // Функция позволяет держать журнал боя внизу, когда появляется скрол, т.е. чтобы показывать последние сообщение.
     const d = document.getElementById("combatLog");
     d.scrollTop = d.scrollHeight;
-}
+};
+
+function importantText(text) {
+    let redText = document.createElement('span');
+    redText.className = importantText;
+    redText.innerText = text;
+    return redText;
+};

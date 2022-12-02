@@ -1,0 +1,38 @@
+@media (max-width: 1255px) {
+    .wrapper {
+        flex-direction: column;
+    }
+
+    .player {
+        width: 30%;
+    }
+
+    #combatLog {
+        margin-left: 0;
+        width: 300px;
+        height: 400px;
+    }
+
+    .combatLogMessage {
+        font-size: 12px;
+    }
+
+    #combatLogTitle {
+        margin-bottom: 10px;
+    }
+
+    #combatLog {
+        margin: 0;
+    }
+    .reset {
+        align-items: flex-start;
+        justify-content: center;
+        width: fit-content;
+    }
+
+    .reset button {
+        width: 65px;
+        height: 40px;
+        margin: 0;
+    }
+}
