@@ -13,13 +13,13 @@ let p1_max_hp = 100;
 let player1_damage = 15;
 let player1_block = 0;
 let player1_crit = 25;
-let player1_dodge = 10;
+let player1_dodge = 30;
 
 // Player 2 stats
 let p2_max_hp = 100;
-let player2_damage = 15;
+let player2_damage = 20;
 let player2_block = 0;
-let player2_crit = 25;
+let player2_crit = 10;
 let player2_dodge = 10;
 
 // Initial functions call
@@ -95,7 +95,11 @@ function block(player) { // Функция блока. Персонаж може
 function resetGame() { // Сброс всех параметров на параметры по умолчанию
     p1_hp = p1_max_hp;
     p2_hp = p2_max_hp;
+    player1_crit = player1_crit;
+    player1_dodge = player1_dodge;
     player1_block = 0;
+    player2_crit = player2_crit;
+    player2_dodge = player2_dodge;
     player2_block = 0;
     turn = 'Ход игрока 1';
     turns();
@@ -132,14 +136,14 @@ function crit(player) { /* Функция принимает имя игрока
     if (player == 'player 1' && randomChance(player1_crit) == true) {
         p2_hp -= Math.floor(player1_damage * critMultiplier);
         player2_block = 0;
-        update();
         combatLog(p1_name + ' наносит критический урон игроку ' + p2_name + '.' + ' (-' + Math.floor(player1_damage * critMultiplier) + 'HP)');
+        update();
         return true;
     } else if (player == 'player 2' && randomChance(player2_crit) == true) {
         p1_hp -= Math.floor(player2_damage * critMultiplier);
         player1_block = 0;
-        update();
         combatLog(p2_name + ' наносит критический урон игроку ' + p1_name + '.' + ' (-' + Math.floor(player2_damage * critMultiplier) + 'HP)');
+        update();
         return true;
     } else {
         return false;
@@ -200,10 +204,10 @@ function timeStamp() {
    let hours = new Date().getHours();
    let minutes = new Date().getMinutes();
    let seconds = new Date().getSeconds();
-   let time = hours + ':' + minutes + ':' + seconds + ' : ' ;
    if (hours < 10) {hours = '0' + hours};
    if (minutes < 10) {minutes = '0' + minutes};
    if (seconds < 10) {seconds = '0' + seconds};
+   let time = hours + ':' + minutes + ':' + seconds + ' : ' ;
    return time;
 }
 
