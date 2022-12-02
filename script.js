@@ -13,23 +13,20 @@ let p1_max_hp = 100;
 let player1_damage = 15;
 let player1_block = 0;
 let player1_crit = 25;
+let player1_dodge = 10;
 
 // Player 2 stats
 let p2_max_hp = 100;
 let player2_damage = 15;
 let player2_block = 0;
 let player2_crit = 25;
+let player2_dodge = 10;
 
 // Initial functions call
 p1_hp = p1_max_hp;
 p2_hp = p2_max_hp;
 turns();
 update();
-
-function ScrollToBottom() { // Функция позволяет держать журнал боя внизу, когда появляется скрол, т.е. чтобы показывать последние сообщение.
-    const d = document.getElementById("combatLog");
-    d.scrollTop = d.scrollHeight;
-}
 
 function update() { // Функция обновляет отображение полоски HP в соотв. с переменными, проверяет не победил ли кто-то из игроков, и выводит числовое значение HP рядом с полоской.
     updateHP();
@@ -46,9 +43,11 @@ function attack(player) { // Функция атаки. Принимает в в
     } 
     
     if (player == 'player_1' && player2_block == 0) { // Игрок 1 атакует игрока 2, у игрока 2 нет блока.
-        if (crit('player 1') == true) {
+        if (dodge('player 2') == true) { // Удалось ли игроку 2 уклониться (true - удалось, false - не удалось)
             return;
-        } else {
+       } else if (crit('player 1') == true) { // Наносит ли игрок 1 критический урон 
+            return;
+       } else { // Если игрок 2 не уклонился, и игрок 1 не нанёс критический урон
         p2_hp -= player1_damage;
         player1_block = 0;
         combatLog(p1_name + ' наносит удар игроку ' + p2_name + '.' + ' (-' + player1_damage + 'HP)');
@@ -62,9 +61,11 @@ function attack(player) { // Функция атаки. Принимает в в
     } 
     
     else if (player == 'player_2' && player1_block == 0) { // Игрок 2 атакует игрока 1, у игрока 1 нет блока.
-       if (crit('player 2') == true) {
-        return;
-       } else {
+       if (dodge('player 1') == true) { // Удалось ли игроку 1 уклониться (true - удалось, false - не удалось)
+            return;
+       } else if (crit('player 2') == true) { // Наносит ли игрок 2 критический урон 
+            return;
+       } else { // Если игрок 2 не уклонился, и игрок 1 не нанёс критический урон
         p1_hp -= player2_damage;
         player2_block = 0;
         combatLog(p2_name + ' наносит удар игроку ' + p1_name + '.' + ' (-' + player2_damage + 'HP)')
@@ -77,8 +78,6 @@ function attack(player) { // Функция атаки. Принимает в в
         player2_block = 0;
     } 
     update();
-    console.log(p1_hp);
-    console.log(p2_hp);
 }
 
 function block(player) { // Функция блока. Персонаж может поставить блок (playerX_block = 1) и тогда следующий удар по нему не нанесёт урона, а параметр block будет сброшен на 0.
@@ -113,21 +112,34 @@ function randomChance(percent) { // This function takes an integer argument (per
     }
 };
 
+function dodge(player) { /* Функция расчёта вероятности уклонения. Функция принимает имя игрока в кач.-ве параметра, 
+                            и на основе шанса уклонения этого игрока возвращает true, если он уклонился, и false если нет.*/
+    if (player == 'player 1' && randomChance(player1_dodge) == true) {
+        combatLog(p1_name + ' ловко уклоняется от атаки игрока ' + p2_name);
+        return true
+    } else if (player == 'player 2' && randomChance(player2_dodge) == true) {
+        combatLog(p2_name + ' ловко уклоняется от атаки игрока ' + p1_name);
+        return true
+    } else {
+        return false;
+    }
+}
+
 function crit(player) { /* Функция принимает имя игрока в виде аргумента и наносит другому игроку урон * множ. крита, если случайное число от 1 до 100 попадает в диапазон крит шанса игрока.
                         Например, player1_crit = 10, означает, что игрок 1 наносит критический удар, если случайное число от 1 до 100 будет меньше или равно 10 (т.е. вероятность 10%). */
     let critMultiplier = 2; // Задаёт множитель урона от критического удара
     
     if (player == 'player 1' && randomChance(player1_crit) == true) {
-        p2_hp -= player1_damage * critMultiplier;
+        p2_hp -= Math.floor(player1_damage * critMultiplier);
         player2_block = 0;
         update();
-        combatLog(p1_name + ' наносит критический урон игроку ' + p2_name + '.' + ' (-' + (player1_damage * critMultiplier) + 'HP)');
+        combatLog(p1_name + ' наносит критический урон игроку ' + p2_name + '.' + ' (-' + Math.floor(player1_damage * critMultiplier) + 'HP)');
         return true;
     } else if (player == 'player 2' && randomChance(player2_crit) == true) {
-        p1_hp -= player2_damage * critMultiplier;
+        p1_hp -= Math.floor(player2_damage * critMultiplier);
         player1_block = 0;
         update();
-        combatLog(p2_name + ' наносит критический урон игроку ' + p1_name + '.' + ' (-' + (player2_damage * critMultiplier) + 'HP)');
+        combatLog(p2_name + ' наносит критический урон игроку ' + p1_name + '.' + ' (-' + Math.floor(player2_damage * critMultiplier) + 'HP)');
         return true;
     } else {
         return false;
@@ -200,7 +212,7 @@ function importantText(text) {
     redText.className = importantText;
     redText.innerText = text;
     return redText;
- }
+}
 
 function combatLog(message) {
     const time = document.createElement('span');
@@ -212,4 +224,10 @@ function combatLog(message) {
     logText.prepend(time);
     log.appendChild(logText);
     ScrollToBottom();
+}
+
+
+function ScrollToBottom() { // Функция позволяет держать журнал боя внизу, когда появляется скрол, т.е. чтобы показывать последние сообщение.
+    const d = document.getElementById("combatLog");
+    d.scrollTop = d.scrollHeight;
 }
