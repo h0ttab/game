@@ -12,12 +12,12 @@ let turn = 'Ход игрока 1';
 let p1_max_hp = 100;
 let player1_damage = 15;
 let player1_block = 0;
-let player1_crit = 25;
-let player1_dodge = 30;
+let player1_crit = 10;
+let player1_dodge = 10;
 
 // Player 2 stats
 let p2_max_hp = 100;
-let player2_damage = 20;
+let player2_damage = 15;
 let player2_block = 0;
 let player2_crit = 10;
 let player2_dodge = 10;
