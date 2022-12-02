@@ -16,19 +16,21 @@ p1_hp_bar.setAttribute('optimum', p1_hp * 0.9)
 p2_hp_bar.setAttribute('optimum', p2_hp * 0.9)
 let turn = 'Ход игрока 1';
 
-// Характеристики игрока 1
-let p1_max_hp = 100;
-let player1_damage = 15;
+// Переменные, отвечающие за блокирование ударов (1 - блок, 0 - нет блока)
 let player1_block = 0;
-let player1_crit = 10;
-let player1_dodge = 10;
-
-// Характеристики игрока 2
-let p2_max_hp = 100;
-let player2_damage = 15;
 let player2_block = 0;
-let player2_crit = 10;
-let player2_dodge = 10;
+
+// Характеристики игрока 1 (по умолчанию)
+let p1_max_hp = document.getElementById('player1_hp').value;
+let player1_damage = document.getElementById('player1_damage').value;
+let player1_crit = document.getElementById('player1_crit').value;
+let player1_dodge = document.getElementById('player1_dodge').value;
+
+// Характеристики игрока 2 (по умолчанию)
+let p2_max_hp = document.getElementById('player2_hp').value;
+let player2_damage = document.getElementById('player2_damage').value;
+let player2_crit = document.getElementById('player2_crit').value;
+let player2_dodge = document.getElementById('player2_dodge').value;
 
 // Вызов начальных функций
 p1_hp = p1_max_hp;
@@ -36,9 +38,36 @@ p2_hp = p2_max_hp;
 turns();
 update();
 
+function updateStats(param) { // Функция, которая считывает значения характеристик игроков из соотв. полей ввода и применяет их.
+    if (param == 'input') {
+        p1_max_hp = document.getElementById('player1_hp').value;
+        player1_damage = document.getElementById('player1_damage').value;
+        player1_crit = document.getElementById('player1_crit').value;
+        player1_dodge = document.getElementById('player1_dodge').value;
+
+        p2_max_hp = document.getElementById('player2_hp').value;
+        player2_damage = document.getElementById('player2_damage').value;
+        player2_crit = document.getElementById('player2_crit').value;
+        player2_dodge = document.getElementById('player2_dodge').value;
+        update();
+        resetGame();        
+    } else if (param == 'default') { //Сброс характеристик на значения по умолчанию. Сначала устанавливаются значения полей ввода, а по ним уже назначаются переменные с характеристиками
+        document.getElementById('player1_hp').value = 100;
+        document.getElementById('player1_damage').value = 15;
+        document.getElementById('player1_crit').value = 10;
+        document.getElementById('player1_dodge').value = 10;
+    
+        document.getElementById('player2_hp').value = 100;
+        document.getElementById('player2_damage').value = 15;
+        document.getElementById('player2_crit').value = 10;
+        document.getElementById('player2_dodge').value = 10;  
+    } else {
+        return false;
+    }
+}
+
 function attack(player) { // Функция атаки. Принимает в виде агрумента имя атакующего игрока - player1 или player2.
     turns();
-    // hpCheck();
     update();
     if (p1_hp <= 0 || p2_hp <= 0) {
         return;
@@ -144,14 +173,14 @@ function update() { // Функция обновляет отображение 
 }
 
 function resetGame() { // Сброс всех параметров на параметры по умолчанию
+    player1_block = 0;
+    player2_block = 0;
     p1_hp = p1_max_hp;
     p2_hp = p2_max_hp;
     player1_crit = player1_crit;
     player1_dodge = player1_dodge;
-    player1_block = 0;
     player2_crit = player2_crit;
     player2_dodge = player2_dodge;
-    player2_block = 0;
     turn = 'Ход игрока 1';
     turns();
     update();

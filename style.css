@@ -69,6 +69,7 @@
     border: 3px solid black;
     width: 400px;
     height: 400px;
+    margin-left: 50px;
     overflow: auto;
 }
 
@@ -89,7 +90,27 @@
     text-align: center;
 }
 
+.settings {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .important_text {
     color: red;
     font-weight: 600;
+}
+
+.player1_settings, .player2_settings {
+    margin-bottom: 25px;
+}
+
+.settings button {
+    height: 25px;
+    width: 85%;
+    margin-bottom: 10px;
+}
+
+.settings input {
+    margin-bottom: 5px;
 }
