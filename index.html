@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="script.js" defer></script>
+    <link rel="stylesheet" href="style.css">
+    <title>My Game</title>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="player player_1">
+            <h1 class="player_name" id="player1__name">Игрок 1</h1>
+            <img src="assets/playerAvatarKnight_1.png" alt="" class="player__avatar" id="ava">
+            <span id="p1_hp_display"></span><meter value="100" min="0" max="100" class="hp" id="player_1_hp"></meter>
+            <div class="player__buttons">
+                <button id="player_1_block" onclick="block('player_1')">Защита</button>
+                <button id="player_1_attack" onclick="attack('player_1')">Атака</button>
+            </div>
+        </div>
+        <div class="reset">
+            <button onclick="resetGame()">Новая игра</button>
+        </div>
+        <div class="player player_2">
+            <h1 class="player_name" id="player2__name">Игрок 2</h1>
+            <img src="assets/playerAvatarKnight_2.png" alt="" class="player__avatar">
+            <span id="p2_hp_display"></span><meter value="100" min="0" max="100" class="hp" id="player_2_hp"></meter>
+           <div class="player__buttons">
+                <button id="player_2_block" onclick="block('player_2')">Защита</button>
+                <button id="player_2_attack" onclick="attack('player_2')">Атака</button>
+            </div>
+        </div>
+        <div id="combatLog">
+        </div>
+    </div>
+</body>
+</html>

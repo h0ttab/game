@@ -1,0 +1,80 @@
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.player {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+}
+
+.reset {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}   
+
+.reset button {
+    width: 100px;
+    height: 50px;
+    margin: 0 40px 0;
+}
+
+.player__avatar {
+    height: 300px;
+    width: 180px;
+    margin-bottom: 20px;
+}
+
+.hp {
+    height: 40px;
+    width: 180px;
+}
+
+.player__buttons {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+}
+
+.player__buttons button {
+    margin: 0 10px 0;
+    height: 50px;
+    width: 75px;
+}
+
+#combatLog {
+    margin-left: 50px;
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    border: 3px solid black;
+    width: 400px;
+    height: 400px;
+    overflow: auto;
+}
+
+.combatLogMessage {
+    margin: 5px 10px 5px;
+}
+
+.combatLogTime {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.player_name {
+    font-size: 24px;
+    margin: 0 0 15px;
+    width: 70%;
+    height: 65px;
+    text-align: center;
+}
+
+.important_text {
+    color: red;
+    font-weight: 600;
+}
