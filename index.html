@@ -36,30 +36,32 @@
             </div>
         </div>
         <div class="settings">
-            <div class="player1_settings">
-                <label for="player1-hp">Игрок1 здоровье</label><br>
-                <input type="number" name="player1-hp" id="player1_hp" value="100" min="1"><br>
-                <label for="player1-damage">Урон</label><br>
-                <input type="number" name="player1-damage" id="player1_damage" value="15"><br>
-                <label for="player1-dodge">Шанс уклонения ( % )</label><br>
-                <input type="number" name="player1-dodge" id="player1_dodge" value="10" min="0" max="100"><br>
-                <label for="player1-crit">Шанс крит. удара ( % )</label><br>
-                <input type="number" name="player1-crit" id="player1_crit" value="10" min="0" max="100">
+            <div class="players_settings">
+                <div class="player1_settings">
+                    <label for="player1-hp">Игрок1 здоровье</label><br>
+                    <input type="number" name="player1-hp" id="player1_hp" value="100" min="1"><br>
+                    <label for="player1-damage">Урон</label><br>
+                    <input type="number" name="player1-damage" id="player1_damage" value="15"><br>
+                    <label for="player1-dodge">Шанс уклонения ( % )</label><br>
+                    <input type="number" name="player1-dodge" id="player1_dodge" value="10" min="0" max="100"><br>
+                    <label for="player1-crit">Шанс крит. удара ( % )</label><br>
+                    <input type="number" name="player1-crit" id="player1_crit" value="10" min="0" max="100">
+                </div>
+                <div class="player2_settings">
+                    <label for="player2-hp">Игрок2 здоровье</label><br>
+                    <input type="number" name="player2-hp" id="player2_hp" value="100" min="1"><br>
+                    <label for="player2-damage">Урон</label><br>
+                    <input type="number" name="player2-damage" id="player2_damage" value="15"><br>
+                    <label for="player2-dodge">Шанс уклонения ( % )</label><br>
+                    <input type="number" name="player2-dodge" id="player2_dodge" value="10" min="0" max="100"><br>
+                    <label for="player2-crit">Шанс крит. удара ( % )</label><br>
+                    <input type="number" name="player2-crit" id="player2_crit" value="10" min="0" max="100">
+                </div>
             </div>
-            <div class="player2_settings">
-                <label for="player2-hp">Игрок2 здоровье</label><br>
-                <input type="number" name="player2-hp" id="player2_hp" value="100" min="1"><br>
-                <label for="player2-damage">Урон</label><br>
-                <input type="number" name="player2-damage" id="player2_damage" value="15"><br>
-                <label for="player2-dodge">Шанс уклонения ( % )</label><br>
-                <input type="number" name="player2-dodge" id="player2_dodge" value="10" min="0" max="100"><br>
-                <label for="player2-crit">Шанс крит. удара ( % )</label><br>
-                <input type="number" name="player2-crit" id="player2_crit" value="10" min="0" max="100">
+            <div class="settings_buttons">
+                <button onclick="updateStats('input')">Принять (новая игра)</button>
+                <button onclick="updateStats('default')">По умолчанию</button>
             </div>
-        </div>
-        <div class="settings_buttons">
-            <button onclick="updateStats('input')">Принять (новая игра)</button>
-            <button onclick="updateStats('default')">По умолчанию</button>
         </div>
         <div class="combat_log">
             <h2 id="combatLogTitle">Журнал боя</h2>

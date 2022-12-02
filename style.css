@@ -105,10 +105,20 @@
     margin-bottom: 15px;
 }
 
+.players_settings {
+    display: flex;
+    flex-direction: column;
+}
+
 .settings button {
     height: 25px;
     width: 150px;
     margin-bottom: 5px;
+}
+
+.settings_buttons {
+    display: flex;
+    flex-direction: column;
 }
 
 .settings input {
