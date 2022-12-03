@@ -1,5 +1,6 @@
 // Начальные настройки
 const log = document.getElementById('combatLog');
+let turnsCount = 1;
 let p1_name = document.getElementById('p1_name').value;
 let p2_name = document.getElementById('p2_name').value;
 const p1_hp_bar = document.getElementById('player_1_hp');
@@ -159,13 +160,13 @@ function crit(player) { /* Функция принимает имя игрока
     if (player == 'player 1' && randomChance(player1_crit) == true) {
         p2_hp -= Math.floor(player1_damage * player1_critMultiplier);
         player2_block = 0;
-        combatLog(p1_name + ' наносит критический урон по ' + p2_name + '.' + ' (-' + Math.floor(player1_damage * critMultiplier) + 'HP)');
+        combatLog(p1_name + ' наносит критический урон по ' + p2_name + ' (-' + Math.floor(player1_damage * critMultiplier) + 'HP)');
         update();
         return true;
     } else if (player == 'player 2' && randomChance(player2_crit) == true) {
         p1_hp -= Math.floor(player2_damage * player2_critMultiplier);
         player1_block = 0;
-        combatLog(p2_name + ' наносит критический урон по ' + p1_name + '.' + ' (-' + Math.floor(player2_damage * critMultiplier) + 'HP)');
+        combatLog(p2_name + ' наносит критический урон по ' + p1_name + ' (-' + Math.floor(player2_damage * critMultiplier) + 'HP)');
         update();
         return true;
     } else {
@@ -192,6 +193,7 @@ function resetGame() { // Сброс всех параметров на пара
     turns();
     update();
     log.innerHTML = '';
+    turnsCount = 1;
 }
 
 function stopGame() { // Остановка игры и отключение кнопок действий. Вызывается в случае победы одного из игроков.
@@ -265,8 +267,10 @@ function combatLog(message) { // Получает аргумент "message" и 
     logText.className = 'combatLogMessage';
     logText.innerText = message;
     logText.prepend(time);
+    logText.prepend('[Ход ' + turnsCount + '] ');
     log.appendChild(logText);
     ScrollToBottom();
+    turnsCount++;
 };
 
 
