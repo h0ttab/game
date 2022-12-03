@@ -1,7 +1,7 @@
 // Начальные настройки
 const log = document.getElementById('combatLog');
-let p1_name = 'Ричард Львиное Сердце';
-let p2_name = 'Король Артур';
+let p1_name = document.getElementById('p1_name').value;
+let p2_name = document.getElementById('p2_name').value;
 const p1_hp_bar = document.getElementById('player_1_hp');
 const p2_hp_bar = document.getElementById('player_2_hp');
 document.getElementById('player1__name').textContent = p1_name;
@@ -40,11 +40,15 @@ update();
 
 function updateStats(param) { // Функция, которая считывает значения характеристик игроков из соотв. полей ввода и применяет их.
     if (param == 'input') {
+        p1_name = document.getElementById('p1_name').value;
+        document.getElementById('player1__name').textContent = p1_name;
         p1_max_hp = document.getElementById('player1_hp').value;
         player1_damage = document.getElementById('player1_damage').value;
         player1_crit = document.getElementById('player1_crit').value;
         player1_dodge = document.getElementById('player1_dodge').value;
 
+        p2_name = document.getElementById('p2_name').value;
+        document.getElementById('player2__name').textContent = p2_name;
         p2_max_hp = document.getElementById('player2_hp').value;
         player2_damage = document.getElementById('player2_damage').value;
         player2_crit = document.getElementById('player2_crit').value;
@@ -52,11 +56,13 @@ function updateStats(param) { // Функция, которая считывае
         update();
         resetGame();        
     } else if (param == 'default') { //Сброс характеристик на значения по умолчанию. Сначала устанавливаются значения полей ввода, а по ним уже назначаются переменные с характеристиками
+        document.getElementById('player1__name').textContent = 'Игрок 1'
         document.getElementById('player1_hp').value = 100;
         document.getElementById('player1_damage').value = 15;
         document.getElementById('player1_crit').value = 10;
         document.getElementById('player1_dodge').value = 10;
     
+        document.getElementById('player2__name').textContent = 'Игрок 2'
         document.getElementById('player2_hp').value = 100;
         document.getElementById('player2_damage').value = 15;
         document.getElementById('player2_crit').value = 10;
