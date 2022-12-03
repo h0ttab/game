@@ -15,7 +15,7 @@
         <div class="players">
             <div class="player player_1">
                 <h1 class="player_name" id="player1__name">Игрок 1</h1>
-                <img src="assets/playerAvatarKnight_1.png" alt="" class="player__avatar" id="ava">
+                <img src="assets/warrior.png" alt="" class="player__avatar" id="ava">
                 <span id="p1_hp_display"></span><meter value="100" min="0" max="100" class="hp" id="player_1_hp"></meter>
                 <div class="player__buttons">
                     <button id="player_1_block" onclick="block('player_1')">Защита</button>
@@ -27,7 +27,7 @@
             </div>
             <div class="player player_2">
                 <h1 class="player_name" id="player2__name">Игрок 2</h1>
-                <img src="assets/playerAvatarKnight_2.png" alt="" class="player__avatar">
+                <img src="assets/rogue.png" alt="" class="player__avatar">
                 <span id="p2_hp_display"></span><meter value="100" min="0" max="100" class="hp" id="player_2_hp"></meter>
             <div class="player__buttons">
                     <button id="player_2_block" onclick="block('player_2')">Защита</button>
@@ -38,28 +38,28 @@
         <div class="settings">
             <div class="players_settings">
                 <div class="player1_settings">
-                    <label for="player1-name">Игрок1 имя</label><br>
-                    <input type="text" name="player1-name" id="p1_name" value="Игрок 1"><br>
+                    <label for="player1-name">Игрок 1 имя</label><br>
+                    <input type="text" name="player1-name" id="p1_name" value="Могучий воин"><br>
                     <label for="player1-hp">Здоровье</label><br>
-                    <input type="number" name="player1-hp" id="player1_hp" value="100" min="1"><br>
+                    <input type="number" name="player1-hp" id="player1_hp" value="200" min="1"><br>
                     <label for="player1-damage">Урон</label><br>
-                    <input type="number" name="player1-damage" id="player1_damage" value="15"><br>
+                    <input type="number" name="player1-damage" id="player1_damage" value="20"><br>
                     <label for="player1-dodge">Шанс уклонения ( % )</label><br>
-                    <input type="number" name="player1-dodge" id="player1_dodge" value="10" min="0" max="100"><br>
+                    <input type="number" name="player1-dodge" id="player1_dodge" value="2" min="0" max="100"><br>
                     <label for="player1-crit">Шанс крит. удара ( % )</label><br>
                     <input type="number" name="player1-crit" id="player1_crit" value="10" min="0" max="100">
                 </div>
                 <div class="player2_settings">
-                    <label for="player2-name">Игрок2 имя</label><br>
-                    <input type="text" name="player2-name" id="p2_name" value="Игрок 2"><br>
+                    <label for="player2-name">Игрок 2 имя</label><br>
+                    <input type="text" name="player2-name" id="p2_name" value="Ловкий разбойник"><br>
                     <label for="player2-hp">Здоровье</label><br>
-                    <input type="number" name="player2-hp" id="player2_hp" value="100" min="1"><br>
+                    <input type="number" name="player2-hp" id="player2_hp" value="120" min="1"><br>
                     <label for="player2-damage">Урон</label><br>
-                    <input type="number" name="player2-damage" id="player2_damage" value="15"><br>
+                    <input type="number" name="player2-damage" id="player2_damage" value="10"><br>
                     <label for="player2-dodge">Шанс уклонения ( % )</label><br>
-                    <input type="number" name="player2-dodge" id="player2_dodge" value="10" min="0" max="100"><br>
+                    <input type="number" name="player2-dodge" id="player2_dodge" value="25" min="0" max="100"><br>
                     <label for="player2-crit">Шанс крит. удара ( % )</label><br>
-                    <input type="number" name="player2-crit" id="player2_crit" value="10" min="0" max="100">
+                    <input type="number" name="player2-crit" id="player2_crit" value="20" min="0" max="100">
                 </div>
             </div>
             <div class="settings_buttons">
@@ -72,9 +72,10 @@
             <div id="combatLog">Нажмите "Новая игра", чтобы удалить этот текст.<br>
             Функционал игры: <br>
             - Игроки ходят по очереди, первый ход за игроком слева (Игрок 1) <br>
-            - Во время своего хода игрок может атаковать соперника (Атака), или выставить блок (Защита), чтобы заблокировать следующий удар противника <br>
-            - С некоторой верояностью (можно изменить в настройках) игрок может нанести критический удар (x2 урон) или уклониться от атаки соперника <br>
-            - Если здоровье игрока падает до 0, он считается проигравшим.
+            - Во время своего хода игрок может атаковать соперника (Атака), или заблокировать следующий удар противника (Защита) <br>
+            - С некоторой вероятностью (изменяется в настройках) игрок может нанести критический удар (множитель крит. урона по 
+            умолчанию составлет x2, т.е. крит вдвое сильнее обычной атаки) или уклониться от атаки соперника <br>
+            - Если здоровье игрока снижается до 0, он считается проигравшим.
             </div>
         </div>
     </div>

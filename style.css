@@ -44,6 +44,7 @@
     height: 300px;
     width: 180px;
     margin-bottom: 20px;
+    border: 2px solid black;
 }
 
 .hp {
@@ -86,7 +87,7 @@
     font-size: 24px;
     margin: 0 0 15px;
     width: 70%;
-    height: 85px;
+    height: 45px;
     text-align: center;
 }
 
@@ -124,4 +125,8 @@
 .settings input {
     width: 70px;
     margin-bottom: 5px;
+}
+
+#p2_name, #p1_name {
+    width: 150px;
 }

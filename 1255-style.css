@@ -64,4 +64,8 @@
     .player1_settings {
         margin-right: 20px;
     }
+
+    .player_name {
+        height: 85px;
+    }
 }

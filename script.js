@@ -87,12 +87,12 @@ function attack(player) { // Функция атаки. Принимает в в
        } else { // Если игрок 2 не уклонился, и игрок 1 не нанёс критический урон
         p2_hp -= player1_damage;
         player1_block = 0;
-        combatLog(p1_name + ' наносит удар игроку ' + p2_name + '.' + ' (-' + player1_damage + 'HP)');
+        combatLog(p1_name + ' наносит удар по ' + p2_name + '.' + ' (-' + player1_damage + 'HP)');
         }
     } 
 
     else if (player == 'player_1' && player2_block == 1) { // Игрок 1 атакует игрока 2, игрок 2 блокирует.
-        combatLog(p2_name + ' заблокировал удар игрока ' + p1_name);
+        combatLog(p2_name + ' заблокировал удар от ' + p1_name);
         player1_block = 0;
         player2_block = 0;
     } 
@@ -105,12 +105,12 @@ function attack(player) { // Функция атаки. Принимает в в
        } else { // Если игрок 2 не уклонился, и игрок 1 не нанёс критический урон
         p1_hp -= player2_damage;
         player2_block = 0;
-        combatLog(p2_name + ' наносит удар игроку ' + p1_name + '.' + ' (-' + player2_damage + 'HP)')
+        combatLog(p2_name + ' наносит удар по ' + p1_name + '.' + ' (-' + player2_damage + 'HP)')
        }
     } 
     
     else if (player == 'player_2' && player1_block == 1) { // Игрок 2 атакует игрока 1, игрок 1 блокирует.
-        combatLog(p1_name + ' заблокировал удар игрока ' + p2_name);
+        combatLog(p1_name + ' заблокировал удар от ' + p2_name);
         player1_block = 0;
         player2_block = 0;
     } 
@@ -141,10 +141,10 @@ function randomChance(percent) { // This function takes an integer argument (per
 function dodge(player) { /* Функция расчёта вероятности уклонения. Функция принимает имя игрока в кач.-ве параметра, 
                             и на основе шанса уклонения этого игрока возвращает true, если он уклонился, и false если нет.*/
     if (player == 'player 1' && randomChance(player1_dodge) == true) {
-        combatLog(p1_name + ' ловко уклоняется от атаки игрока ' + p2_name);
+        combatLog(p1_name + ' уклоняется от атаки!');
         return true
     } else if (player == 'player 2' && randomChance(player2_dodge) == true) {
-        combatLog(p2_name + ' ловко уклоняется от атаки игрока ' + p1_name);
+        combatLog(p2_name + ' уклоняется от атаки!');
         return true
     } else {
         return false;
@@ -153,18 +153,19 @@ function dodge(player) { /* Функция расчёта вероятности
 
 function crit(player) { /* Функция принимает имя игрока в виде аргумента и наносит другому игроку урон * множ. крита, если случайное число от 1 до 100 попадает в диапазон крит шанса игрока.
                         Например, player1_crit = 10, означает, что игрок 1 наносит критический удар, если случайное число от 1 до 100 будет меньше или равно 10 (т.е. вероятность 10%). */
-    let critMultiplier = 2; // Задаёт множитель урона от критического удара
+    let player1_critMultiplier = 2; // Задаёт множитель урона от критического удара игрока 1
+    let player2_critMultiplier = 2; // Задаёт множитель урона от критического удара игрока 2
     
     if (player == 'player 1' && randomChance(player1_crit) == true) {
-        p2_hp -= Math.floor(player1_damage * critMultiplier);
+        p2_hp -= Math.floor(player1_damage * player1_critMultiplier);
         player2_block = 0;
-        combatLog(p1_name + ' наносит критический урон игроку ' + p2_name + '.' + ' (-' + Math.floor(player1_damage * critMultiplier) + 'HP)');
+        combatLog(p1_name + ' наносит критический урон по ' + p2_name + '.' + ' (-' + Math.floor(player1_damage * critMultiplier) + 'HP)');
         update();
         return true;
     } else if (player == 'player 2' && randomChance(player2_crit) == true) {
-        p1_hp -= Math.floor(player2_damage * critMultiplier);
+        p1_hp -= Math.floor(player2_damage * player2_critMultiplier);
         player1_block = 0;
-        combatLog(p2_name + ' наносит критический урон игроку ' + p1_name + '.' + ' (-' + Math.floor(player2_damage * critMultiplier) + 'HP)');
+        combatLog(p2_name + ' наносит критический урон по ' + p1_name + '.' + ' (-' + Math.floor(player2_damage * critMultiplier) + 'HP)');
         update();
         return true;
     } else {
