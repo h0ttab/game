@@ -27,8 +27,6 @@
         margin: 0;
     }
     .reset {
-        align-items: flex-start;
-        justify-content: center;
         width: fit-content;
     }
 
