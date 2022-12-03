@@ -1,26 +1,3 @@
-// Начальные настройки
-const log = document.getElementById('combatLog');
-let turnsCount = 1;
-let p1_name = document.getElementById('p1_name').value;
-let p2_name = document.getElementById('p2_name').value;
-const p1_hp_bar = document.getElementById('player_1_hp');
-const p2_hp_bar = document.getElementById('player_2_hp');
-document.getElementById('player1__name').textContent = p1_name;
-document.getElementById('player2__name').textContent = p2_name;
-let p1_hp = document.getElementById('player_1_hp').value;
-let p2_hp = document.getElementById('player_2_hp').value;
-p1_hp_bar.setAttribute('low', p1_hp * 0.3)
-p2_hp_bar.setAttribute('low', p2_hp * 0.3)
-p1_hp_bar.setAttribute('high', p1_hp * 0.75)
-p2_hp_bar.setAttribute('high', p2_hp * 0.75)
-p1_hp_bar.setAttribute('optimum', p1_hp * 0.9)
-p2_hp_bar.setAttribute('optimum', p2_hp * 0.9)
-let turn = 'Ход игрока 1';
-
-// Переменные, отвечающие за блокирование ударов (1 - блок, 0 - нет блока)
-let player1_block = 0;
-let player2_block = 0;
-
 // Характеристики игрока 1 (по умолчанию)
 let p1_max_hp = document.getElementById('player1_hp').value;
 let player1_damage = document.getElementById('player1_damage').value;
@@ -33,11 +10,57 @@ let player2_damage = document.getElementById('player2_damage').value;
 let player2_crit = document.getElementById('player2_crit').value;
 let player2_dodge = document.getElementById('player2_dodge').value;
 
+// Начальные настройки
+let intervalId = 0;
+const log = document.getElementById('combatLog');
+let turnsCount = 1;
+let p1_name = document.getElementById('p1_name').value;
+let p2_name = document.getElementById('p2_name').value;
+const p1_hp_bar = document.getElementById('player_1_hp');
+const p2_hp_bar = document.getElementById('player_2_hp');
+document.getElementById('player1__name').textContent = p1_name;
+document.getElementById('player2__name').textContent = p2_name;
+let p1_hp = document.getElementById('player_1_hp').value;
+let p2_hp = document.getElementById('player_2_hp').value;
+p1_hp_bar.setAttribute('low', p1_max_hp * 0.3)
+p2_hp_bar.setAttribute('low', p2_max_hp * 0.3)
+p1_hp_bar.setAttribute('high', p1_max_hp * 0.75)
+p2_hp_bar.setAttribute('high', p2_max_hp * 0.75)
+p1_hp_bar.setAttribute('optimum', p1_max_hp * 0.9)
+p2_hp_bar.setAttribute('optimum', p2_max_hp * 0.9)
+let turn = 'Ход игрока 1';
+
+// Переменные, отвечающие за блокирование ударов (1 - блок, 0 - нет блока)
+let player1_block = 0;
+let player2_block = 0;
+
 // Вызов начальных функций
 p1_hp = p1_max_hp;
 p2_hp = p2_max_hp;
 turns();
 update();
+
+function enableAutoCombat() {
+    intervalId = setInterval(() => autoCombat(), 500);
+}
+
+function autoCombat() {
+    if (p1_hp == 0 || p2_hp == 0) {
+        clearInterval(intervalId);
+    } else if (turn == 'Ход игрока 1') {
+        if ( randomChance(85) == true ) {
+            attack('player_1')
+        } else {
+            block('player_1')
+        }
+    } else {
+        if ( randomChance(85) == true ) {
+        attack('player_2')
+        } else {
+        block('player_2')
+        }
+    }
+}
 
 function updateStats(param) { // Функция, которая считывает значения характеристик игроков из соотв. полей ввода и применяет их.
     if (param == 'input') {
@@ -119,11 +142,11 @@ function attack(player) { // Функция атаки. Принимает в в
 }
 
 function block(player) { // Функция блока. Персонаж может поставить блок (playerX_block = 1) и тогда следующий удар по нему не нанесёт урона, а параметр block будет сброшен на 0.
-    if (player == 'player_1') {
+    if (player == 'player_1' && p1_hp > 0) {
         player1_block = 1;
         combatLog(p1_name + ' готов блокировать следующий удар.');
         turns();
-    } else {
+    } else if (player == 'player_2' && p2_hp > 0) {
         player2_block = 1;
         combatLog(p2_name + ' готов блокировать следующий удар.');
         turns();
@@ -160,13 +183,13 @@ function crit(player) { /* Функция принимает имя игрока
     if (player == 'player 1' && randomChance(player1_crit) == true) {
         p2_hp -= Math.floor(player1_damage * player1_critMultiplier);
         player2_block = 0;
-        combatLog(p1_name + ' наносит критический урон по ' + p2_name + ' (-' + Math.floor(player1_damage * critMultiplier) + 'HP)');
+        combatLog(p1_name + ' наносит критический урон по ' + p2_name + ' (-' + Math.floor(player1_damage * player1_critMultiplier) + 'HP)');
         update();
         return true;
     } else if (player == 'player 2' && randomChance(player2_crit) == true) {
         p1_hp -= Math.floor(player2_damage * player2_critMultiplier);
         player1_block = 0;
-        combatLog(p2_name + ' наносит критический урон по ' + p1_name + ' (-' + Math.floor(player2_damage * critMultiplier) + 'HP)');
+        combatLog(p2_name + ' наносит критический урон по ' + p1_name + ' (-' + Math.floor(player2_damage * player2_critMultiplier) + 'HP)');
         update();
         return true;
     } else {
@@ -209,12 +232,12 @@ function hpCheck() { // Функция проверки текущего HP иг
         p1_hp = 0;
         updateHP();
         stopGame();
-        combatLog(p1_name + ' погибает!');
+        combatLog(p1_name + ' убит!');
     } else if (p2_hp <= 0 ) {
         p2_hp = 0;
         updateHP();
         stopGame();
-        combatLog(p2_name + ' погибает!');
+        combatLog(p2_name + ' убит!');
     } else {
         return;
     }
